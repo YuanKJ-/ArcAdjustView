@@ -88,10 +88,27 @@ public class AdjustView extends View {
     protected String tipTextCN = "转盘"; //中文
     protected String tipTextEN = "TURNTABLE"; //英文
 
+    /**
+     * @param context 上下文
+     * @param tipTextCN 中文名
+     * @param tipTextEN 英文名
+     * @param maxValue 最大值
+     *
+     * 该初始化方法默认最小值为0
+     * */
     public AdjustView(Context context, String tipTextCN, String tipTextEN, int maxValue) {
         this(context, tipTextCN, tipTextEN, 0, maxValue);
     }
 
+    /**
+     * @param context 上下文
+     * @param tipTextCN 中文名
+     * @param tipTextEN 英文名
+     * @param minValue 最小值
+     * @param maxValue 最大值
+     *
+     * 最小值最大值为负数也可正常使用
+     * */
     public AdjustView(Context context, String tipTextCN, String tipTextEN, int minValue, int maxValue) {
         this(context);
         this.tipTextCN = tipTextCN;

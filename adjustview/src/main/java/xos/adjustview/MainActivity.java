@@ -20,7 +20,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adjustView = new AdjustView(this);
+        adjustView = new AdjustView(this,"阀值","THRESHOLD",-5,5);
+        adjustView.setPercentValue(false);
         setContentView(adjustView);
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
