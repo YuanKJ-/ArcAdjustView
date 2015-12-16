@@ -1,0 +1,21 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="value_text_size">54sp</dimen>
+    <dimen name="back_variable_stroke_width">38dp</dimen>
+    <dimen name="variable_stroke_width">38dp</dimen>
+    <dimen name="variable_radius">131dp</dimen><!--实际半径 ＝ 标注半径 + 环宽度/2-->
+    <dimen name="basic_outside_stroke_width">1dp</dimen>
+    <dimen name="basic_outside_radius">150dp</dimen><!--实际半径 ＝ 标注半径 + 环宽度/2-->
+    <dimen name="shadow_outside_stroke_width">2dp</dimen>
+    <dimen name="basic_inside_stroke_width">1dp</dimen>
+    <dimen name="basic_inside_radius">105dp</dimen>
+
+    <dimen name="text_top_margin">72dp</dimen>
+    <dimen name="text_middle_margin">11dp</dimen>
+    <dimen name="top_text_size">21sp</dimen>
+    <dimen name="bottom_text_size">27sp</dimen>
+
+</resources>
