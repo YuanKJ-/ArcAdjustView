@@ -83,12 +83,41 @@ protected void onCreate(Bundle savedInstanceState) {
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     AdjustView adjustView = new AdjustView(this,"阀值","THRESHOLD",100);
+    setContentView(adjustView);
     adjustView.valueAdd(1);
     adjustView.valueSubtract(1);
     adjustView.valueAdd();
     adjustView.valueSubtract();
-    setContentView(adjustView);
 }
 ```
 
-未完待续：后续还有按份数调节指定份数以及数值变化回调接口
+其中，无参数的`valueAdd()`以及无参数的`valueSubtract()`默认一次增加或减少十分之一的，如果想自定义总共可以调节多少次，可以通过`setTotalTimes(int times)`进行设置
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    AdjustView adjustView = new AdjustView(this,"阀值","THRESHOLD",100);
+    adjustView.setTotalTimes(2);
+    setContentView(adjustView);
+    adjustView.valueAdd();
+}
+```
+
+回调接口:调用`valueAdd()`或`valueSubtract()`后转盘的实际值会进行增减，通过`setAdjustValueListener()`重写`valueChange()`回调方法可以获得转盘变化后的值
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    AdjustView adjustView = new AdjustView(this,"阀值","THRESHOLD",100);
+    adjustView.setAdjustValueListener(new AdjustView.AdjustValueListener() {
+        @Override
+        public void valueChange(int oldValue, int newValue) {
+            Log.w("test",oldValue+":"+newValue);
+        }
+    });
+    setContentView(adjustView);
+    adjustView.valueAdd();
+}
+```
