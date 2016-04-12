@@ -1,5 +1,6 @@
 package xos.adjustview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.graphics.SweepGradient;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
 
 import xos.adjustview.R;
@@ -22,54 +24,54 @@ import xos.adjustview.R;
 public class AdjustView extends View {
     private final static String TAG = AdjustView.class.getSimpleName();
 
-    private static float VALUE_TEXT_SIZE;
-    private static float BACK_VARIABLE_STROKE_WIDTH;
-    private static float VARIABLE_STROKE_WIDTH;
-    private static float VARIABLE_RADIUS;
-    private static float BASIC_OUTSIDE_STROKE_WIDTH;
-    private static float BASIC_OUTSIDE_RADIUS;
-    private static float SHADOW_OUTSIDE_STROKE_WIDTH;
-    private static float BASIC_INSIDE_STROKE_WIDTH;
-    private static float BASIC_INSIDE_RADIUS;
-    private static float TEXT_TOP_MARGIN;
-    private static float TEXT_MIDDLE_MARGIN;
-    private static float TOP_TEXT_SIZE;
-    private static float BOTTOM_TEXT_SIZE;
+    protected static float VALUE_TEXT_SIZE;
+    protected static float BACK_VARIABLE_STROKE_WIDTH;
+    protected static float VARIABLE_STROKE_WIDTH;
+    protected static float VARIABLE_RADIUS;
+    protected static float BASIC_OUTSIDE_STROKE_WIDTH;
+    protected static float BASIC_OUTSIDE_RADIUS;
+    protected static float SHADOW_OUTSIDE_STROKE_WIDTH;
+    protected static float BASIC_INSIDE_STROKE_WIDTH;
+    protected static float BASIC_INSIDE_RADIUS;
+    protected static float TEXT_TOP_MARGIN;
+    protected static float TEXT_MIDDLE_MARGIN;
+    protected static float TOP_TEXT_SIZE;
+    protected static float BOTTOM_TEXT_SIZE;
 
     /**
      * 数值变化监听器
      */
-    private AdjustValueListener adjustValueListener;
+    protected AdjustValueListener adjustValueListener;
 
-    private Point centerPoint; //中心点
+    protected Point centerPoint; //中心点
 
     /**
      * 可变化弧形进度条
      */
-    private Paint variablePaint;
-    private Paint backVariablePaint;
-    private float variableRadius; //半径
-    private RectF variableOval; //形状和大小
+    protected Paint variablePaint;
+    protected Paint backVariablePaint;
+    protected float variableRadius; //半径
+    protected RectF variableOval; //形状和大小
 
     /**
      * 内环与外环基线
      */
-    private Paint basicOutsidePaint;
-    private float basicOutsideRadius;
-    private RectF basicOutsideOval; //形状和大小
+    protected Paint basicOutsidePaint;
+    protected float basicOutsideRadius;
+    protected RectF basicOutsideOval; //形状和大小
 
-    private Paint shadowOutsidePaint; //模拟外环阴影
+    protected Paint shadowOutsidePaint; //模拟外环阴影
 
-    private Paint basicInsidePaint;
-    private float basicInsideRadius;
-    private RectF basicInsideOval;
+    protected Paint basicInsidePaint;
+    protected float basicInsideRadius;
+    protected RectF basicInsideOval;
 
     /**
      * 进度值文本
      */
-    private TextPaint valueTextPaint;
-    private TextPaint topTextPaint;
-    private TextPaint bottomTextPaint;
+    protected TextPaint valueTextPaint;
+    protected TextPaint topTextPaint;
+    protected TextPaint bottomTextPaint;
 
 
     /**
@@ -111,8 +113,8 @@ public class AdjustView extends View {
      * */
     public AdjustView(Context context, String tipTextCN, String tipTextEN, int minValue, int maxValue) {
         this(context);
-        this.tipTextCN = tipTextCN;
-        this.tipTextEN = tipTextEN;
+        this.tipTextCN = tipTextCN == null ? "" : tipTextCN;
+        this.tipTextEN = tipTextEN == null ? "" : tipTextEN;
         this.minValue = minValue;
         this.value = minValue;
         this.maxValue = maxValue;
@@ -199,10 +201,10 @@ public class AdjustView extends View {
         drawText(canvas);
     }
 
-    private void drawText(Canvas canvas) {
+    protected void drawText(Canvas canvas) {
         String val = isPercentValue ? String.valueOf((int) (getCurrentScale() * 100)) : String.valueOf(value); //百分比或实际值显示
         float valueHeight = getTextHeight(val, valueTextPaint);
-        canvas.drawText(val, centerPoint.x, centerPoint.y + valueHeight / 2, valueTextPaint);
+        canvas.drawText(val, centerPoint.x, centerPoint.y + (int)(valueHeight / 2), valueTextPaint);
         String topText = tipTextCN;
         float topTextHeight = getTextHeight(topText, topTextPaint);
         canvas.drawText(topText, centerPoint.x, centerPoint.y + TEXT_TOP_MARGIN + topTextHeight, topTextPaint);
@@ -211,13 +213,13 @@ public class AdjustView extends View {
         canvas.drawText(bottomText, centerPoint.x, centerPoint.y + TEXT_TOP_MARGIN + topTextHeight + TEXT_MIDDLE_MARGIN + bottomTextHeight, bottomTextPaint);
     }
 
-    private void drawBasicLine(Canvas canvas) {
+    protected void drawBasicLine(Canvas canvas) {
         canvas.drawArc(basicOutsideOval, 150, 240, false, shadowOutsidePaint);
         canvas.drawArc(basicOutsideOval, 150, 240, false, basicOutsidePaint);
         canvas.drawArc(basicInsideOval, 150, 240, false, basicInsidePaint);
     }
 
-    private void drawVariableLine(Canvas canvas) {
+    protected void drawVariableLine(Canvas canvas) {
         canvas.drawArc(variableOval, 150, 240, false, backVariablePaint);
 
         int[] colors = {Color.parseColor("#EC1AFFFF"), Color.parseColor("#FF1AFFFF"),
@@ -267,33 +269,12 @@ public class AdjustView extends View {
         return textBound.bottom - textBound.top;
     }
 
-    public void valueAdd(int tmpValue){
-        valueAdd((float)tmpValue);
-    }
-
-    public void valueSubtract(int tmpValue){
-        valueSubtract((float)tmpValue);
-    }
-
     /**
      * 调节数值增加
      * 回调监听器传出变化前后的数值
      */
     public void valueAdd() {
         float tmpValue = (float) Math.abs(maxValue-minValue) / totalTimes;
-        valueAdd(tmpValue);
-    }
-
-    /**
-     * 调节数值减少
-     * 回调监听器传出变化前后的数值
-     */
-    public void valueSubtract() {
-        float tmpValue = (float) Math.abs(maxValue-minValue) / totalTimes;
-        valueSubtract(tmpValue);
-    }
-
-    private void valueAdd(float tmpValue){
         if (tmpValue < 1) {
             tmpValue = 1;
         }
@@ -307,7 +288,12 @@ public class AdjustView extends View {
         }
     }
 
-    private void valueSubtract(float tmpValue){
+    /**
+     * 调节数值减少
+     * 回调监听器传出变化前后的数值
+     */
+    public void valueSubtract() {
+        float tmpValue = (float) Math.abs(maxValue-minValue) / totalTimes;
         if (tmpValue < 1) {
             tmpValue = 1;
         }

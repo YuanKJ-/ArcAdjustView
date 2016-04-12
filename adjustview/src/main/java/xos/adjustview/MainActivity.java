@@ -13,26 +13,27 @@ public class MainActivity extends Activity {
 
     private static final int FLING_MIN_DISTANCE = 50;
     private static final int FLING_MIN_VELOCITY = 0;
-    private AdjustView adjustView;
+    private BrightnessAdjustView adjustView;
     private GestureDetector mGestureDetector;
     private boolean isScroll = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adjustView = new AdjustView(this,"阀值","THRESHOLD",-5,5);
+        adjustView = new BrightnessAdjustView(this,"亮度",null,-5,5);
         adjustView.setPercentValue(false);
+        adjustView.setValue(2);
         setContentView(adjustView);
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 if (Math.abs(distanceY) < 20 && Math.abs(distanceX) > Math.abs(distanceY)) {
                     if (distanceX < -10) {
-                        adjustView.valueAdd(1);
+                        adjustView.valueAdd();
                         isScroll = true;
                         return true;
                     } else if (distanceX > 10) {
-                        adjustView.valueSubtract(1);
+                        adjustView.valueSubtract();
                         isScroll = true;
                         return true;
                     }
