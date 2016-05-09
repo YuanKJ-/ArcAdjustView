@@ -177,7 +177,7 @@ public class AdjustView extends View {
 
     }
 
-    private void initDimens() {
+    protected void initDimens() {
         VALUE_TEXT_SIZE = getResources().getDimension(R.dimen.value_text_size);
         BACK_VARIABLE_STROKE_WIDTH = getResources().getDimension(R.dimen.back_variable_stroke_width);
         VARIABLE_STROKE_WIDTH = getResources().getDimension(R.dimen.variable_stroke_width);

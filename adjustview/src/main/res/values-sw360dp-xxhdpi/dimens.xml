@@ -18,4 +18,10 @@
     <dimen name="top_text_size">21sp</dimen>
     <dimen name="bottom_text_size">27sp</dimen>
 
+    <!--brightness dimen-->
+    <dimen name="brightness_text_margin_center">41dp</dimen>
+    <dimen name="brightness_text_size">27sp</dimen>
+    <dimen name="brightness_close_text_size">18sp</dimen>
+    <dimen name="brightness_close_text_margin_left">11dp</dimen>
+
 </resources>

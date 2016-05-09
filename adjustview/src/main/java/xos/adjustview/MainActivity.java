@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adjustView = new BrightnessAdjustView(this,"亮度",null,-5,5);
+        adjustView = new BrightnessAdjustView(this,"亮度",-5,5);
         adjustView.setPercentValue(false);
         adjustView.setValue(2);
         setContentView(adjustView);

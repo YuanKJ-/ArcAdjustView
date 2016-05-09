@@ -15,4 +15,11 @@
     <dimen name="text_middle_margin">12dp</dimen>
     <dimen name="top_text_size">24sp</dimen>
     <dimen name="bottom_text_size">30sp</dimen>
+
+    <!--brightness dimen-->
+    <dimen name="brightness_text_margin_center">45dp</dimen>
+    <dimen name="brightness_text_size">30sp</dimen>
+    <dimen name="brightness_close_text_size">20sp</dimen>
+    <dimen name="brightness_close_text_margin_left">12dp</dimen>
+
 </resources>
